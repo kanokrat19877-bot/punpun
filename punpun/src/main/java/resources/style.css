@@ -1,0 +1,38 @@
+/* ตั้งค่าฟอนต์ทั้งแอป */
+
+MainApp{
+	-fx-font-family : "Kanit";
+}
+
+.root {
+    -fx-font-family: "Kanit";
+    -fx-font-size: 16px;
+}
+
+/* Label */
+.label {
+    -fx-font-size: 18px;
+}
+
+/* Button */
+.button {
+    -fx-font-size: 14px;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+/* TextField / PasswordField */
+.text-field, .password-field {
+    -fx-font-size: 14px;
+    -fx-background-radius: 6;
+}
+
+/* TableView */
+.table-view {
+    -fx-font-size: 14px;
+}
+
+/* Menu */
+.menu-bar, .menu-item {
+    -fx-font-size: 15px;
+}

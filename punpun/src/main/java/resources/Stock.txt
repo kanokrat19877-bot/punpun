@@ -1,0 +1,10 @@
+JavaOOP, สมฮง, สยองขวัญ, 100.0, 5, 4.2, 1
+The Cursed Inheritance, สมชาย, ลึกลับ, 250.0, 10, 4.5, 3
+Nightmare in Bangkok, วิภา, ผี, 180.0, 7, 4.8, 12
+Psychopath Next Door, John Doe, จิตวิทยา, 320.0, 4, 4.0, 0
+The Silent Forest, อากิระ, เหนือธรรมชาติ, 290.0, 12, 4.6, 5
+Blood Moon Ritual, มานะ, เลือดสาด, 350.0, 3, 4.3, 8
+Zombie Apocalypse TH, ปิยะ, ซอมบี้, 220.0, 15, 3.9, 20
+The Haunting Melody, รินดา, ผี, 195.0, 6, 4.7, 2
+Deep Sea Terror, กิตติ, ไซไฟ, 280.0, 8, 4.1, 4
+Dark Web Mystery, แอนนา, จิตวิทยา, 310.0, 2, 4.4, 6
