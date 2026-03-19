@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import bookstore.model.Book;
 import bookstore.model.Inventory;
@@ -21,18 +22,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class StorePage {
 
     private void loadBooks(GridPane grid, List<Book> books, Label noBookLabel) {
-    	
-    	Font font = Font.loadFont(
-                getClass().getResourceAsStream("/resources/font/Kanit-Regular.ttf"),
-                20
-            );
-    	
         grid.getChildren().clear();
         if (books == null || books.isEmpty()) {
             noBookLabel.setVisible(true);
@@ -55,11 +49,10 @@ public class StorePage {
 
     private List<Book> loadBooksFromFile() {
         List<Book> bookList = new ArrayList<>();
-        // อ้างอิง Path ตามรูปโครงสร้างโปรเจกต์: src/main/resources/Stock.txt
         File file = new File("src/main/java/resources/Stock.txt");
         
         if (!file.exists()) {
-            System.out.println("⚠️ Warning: Stock.txt not found at " + file.getAbsolutePath());
+            System.out.println("⚠️ Warning: Stock.txt not found");
             return bookList;
         }
 
@@ -77,7 +70,7 @@ public class StorePage {
                 }
             }
         } catch (Exception e) {
-            System.err.println("❌ Error: " + e.getMessage());
+            e.printStackTrace();
         }
         return bookList;
     }
@@ -87,8 +80,8 @@ public class StorePage {
         bookGrid.setHgap(20); bookGrid.setVgap(20);
         bookGrid.setPadding(new Insets(20));
 
-        Label noBookLabel = new Label("ไม่พบหนังสือใน stock");
-        noBookLabel.setStyle("-fx-font-size:18px;");
+        Label noBookLabel = new Label("ไม่พบหนังสือในสต็อก");
+        noBookLabel.setStyle("-fx-font-size:18px; -fx-text-fill: gray;");
         noBookLabel.setVisible(false);
 
         ScrollPane scrollPane = new ScrollPane(bookGrid);
@@ -107,68 +100,39 @@ public class StorePage {
         BorderPane root = new BorderPane();
         root.setCenter(centerPane);
 
-        // --- SIDEBAR CUSTOM UI (ตามรูปภาพ) ---
+        // --- SIDEBAR ---
         VBox sidebarContainer = new VBox(15);
         sidebarContainer.setPadding(new Insets(25));
         sidebarContainer.setPrefWidth(260);
-        sidebarContainer.setStyle("-fx-background-color: #f4f4f4;"); // พื้นหลังข้างนอก
+        sidebarContainer.setStyle("-fx-background-color: #f4f4f4;");
 
         Label mainTitle = new Label("ตั้งค่าการค้นหา");
-        mainTitle.setStyle("-fx-font-size: 24px; "
-        		+ "-fx-font-weight: bold; "
-        		+ "-fx-text-fill: #1a1a1a;");
+        mainTitle.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
 
-        // สร้างปุ่ม "ทั้งหมด" แยกออกมา (อยู่ระหว่างหัวข้อ)
         ToggleGroup categoryGroup = new ToggleGroup();
         RadioButton allBtn = new RadioButton("ทั้งหมด");
         allBtn.setToggleGroup(categoryGroup);
         allBtn.setSelected(true);
-        allBtn.setStyle("-fx-text-fill: #1a1a1a; "
-        		+ "-fx-font-size: 14px; "
-        		+ "-fx-font-weight: bold;");
-        allBtn.setPadding(new Insets(20));
+        allBtn.setStyle("-fx-font-weight: bold; -fx-padding: 10 0 10 0;");
         allBtn.setOnAction(e -> loadBooks(bookGrid, booksFromFile, noBookLabel));
 
-        // กล่องเมนูหมวดหมู่ (สีเข้มโค้งมนตามรูป)
-        VBox categoryCard = new VBox(12);
-        categoryCard.setPadding(new Insets(20));
-        categoryCard.setStyle("-fx-background-color: #343a40; "
-        		+ "-fx-background-radius: 15;");
+        VBox categoryCard = new VBox(10);
+        categoryCard.setPadding(new Insets(15));
+        categoryCard.setStyle("-fx-background-color: #343a40; -fx-background-radius: 10;");
 
         Label categoryHeader = new Label("หมวดหมู่สินค้า");
-        categoryHeader.setStyle("-fx-text-fill: white; -fx-font-size: 14px; "
-        						+ "-fx-font-weight: bold;");
-        
-        // ขีดเส้นใต้หัวข้อเล็กน้อย
-        VBox headerBox = new VBox(8, categoryHeader);
-        headerBox.setPadding(new Insets(0, 0, 10, 0));
-        headerBox.setStyle("-fx-border-color: #495057; "
-        				+ "-fx-border-width: 0 0 1 0;");
-
-        categoryCard.getChildren().add(headerBox);
+        categoryHeader.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+        categoryCard.getChildren().add(categoryHeader);
 
         String[] cats = {"เหนือธรรมชาติ", "จิตวิทยา", "ระทึกขวัญ", "ผี", "เลือดสาด", "ไซไฟ", "ซอมบี้"};
         for (String c : cats) {
             RadioButton rb = new RadioButton(c);
             rb.setToggleGroup(categoryGroup);
-            rb.setStyle("-fx-text-fill: #adb5bd; "
-            		+ "-fx-font-size: 14px; "
-            		+ "-fx-cursor: hand;");
-            
-            // เอฟเฟกต์เมื่อเลือก
-            rb.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-                if (isNowSelected) rb.setStyle("-fx-text-fill: white; "
-                		+ "-fx-font-size: 14px; "
-                		+ "-fx-font-weight: bold;");
-                
-                else rb.setStyle("-fx-text-fill: #adb5bd; "
-                		+ "-fx-font-size: 14px;");
-            });
-
+            rb.setStyle("-fx-text-fill: #adb5bd;");
             rb.setOnAction(e -> {
                 List<Book> filtered = booksFromFile.stream()
-                        .filter(b -> b.getCategory().equals(c))
-                        .toList();
+                        .filter(b -> b.getCategory().equalsIgnoreCase(c))
+                        .collect(Collectors.toList());
                 loadBooks(bookGrid, filtered, noBookLabel);
             });
             categoryCard.getChildren().add(rb);
@@ -177,13 +141,16 @@ public class StorePage {
         sidebarContainer.getChildren().addAll(mainTitle, allBtn, categoryCard);
         root.setLeft(sidebarContainer);
 
-        // --- TOP BAR ---
-        PopAndPriceSort sortUI = new PopAndPriceSort(bookService);
-        HBox sortBox = sortUI.createSortBox(sorted -> loadBooks(bookGrid, sorted, noBookLabel));
-        sortBox.setPadding(new Insets(10, 20, 10, 0));
-        sortBox.setAlignment(Pos.CENTER_RIGHT);
-
+        // --- TOP BAR (NavBar & Sort) ---
         NavBar nav = new NavBar();
+        PopAndPriceSort sortUI = new PopAndPriceSort(bookService);
+        
+        // ส่วนจัดเรียง (Sort)
+        HBox sortBox = sortUI.createSortBox(sorted -> loadBooks(bookGrid, sorted, noBookLabel));
+        sortBox.setAlignment(Pos.CENTER_RIGHT);
+        sortBox.setPadding(new Insets(10, 20, 10, 0));
+
+        // รวม NavBar เข้ากับตัวจัดเรียง
         VBox topBox = new VBox(nav.createNavBar(stage, bookService, b -> loadBooks(bookGrid, booksFromFile, noBookLabel)), sortBox);
         root.setTop(topBox);
         

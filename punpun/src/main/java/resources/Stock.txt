@@ -1,10 +1,16 @@
-JavaOOP, สมฮง, สยองขวัญ, 100.0, 5, 4.2, 1
-The Cursed Inheritance, สมชาย, ลึกลับ, 250.0, 10, 4.5, 3
-Nightmare in Bangkok, วิภา, ผี, 180.0, 7, 4.8, 12
-Psychopath Next Door, John Doe, จิตวิทยา, 320.0, 4, 4.0, 0
-The Silent Forest, อากิระ, เหนือธรรมชาติ, 290.0, 12, 4.6, 5
-Blood Moon Ritual, มานะ, เลือดสาด, 350.0, 3, 4.3, 8
-Zombie Apocalypse TH, ปิยะ, ซอมบี้, 220.0, 15, 3.9, 20
-The Haunting Melody, รินดา, ผี, 195.0, 6, 4.7, 2
-Deep Sea Terror, กิตติ, ไซไฟ, 280.0, 8, 4.1, 4
-Dark Web Mystery, แอนนา, จิตวิทยา, 310.0, 2, 4.4, 6
+The Cursed Inheritance, Faith Bojorquez, gothic horror/thriller, 250.0, 10, 5.0, 3
+Psychopath Next Door, Mark Edwards, thriller, 320.0, 4, 4.0, 0
+The Silent Patient, Alex Michaelides, จิตวิทยา, 499.0, 10, 4.9, 9
+The Silent Forest, David Kummer, สยองขวัญ, 290.0, 12, 4.3, 5
+Zombie Apocalypse!, Stephen Jones, zombie, 777.77, 15, 4.1, 20
+Haunting Melody, Chloe Spenser, ผี, 195.0, 6, 4.2, 2
+Deep Sea Terror, Olivier Descosse, ไซไฟ, 280.0, 8, 4.1, 4
+ฆาตกรมนุษย์กบกับศพปริศนา, ชิจิริ นากายามะ, Thriller, 330.0, 12, 5.0, 94
+ฆาตกรมนุษย์กบกับศพปริศนา ถึงเวลาออกฆ่าอีกครั้ง, ชิจิริ นากายามะ, Thriller, 310.0, 11, 4.8, 50
+There’s No Way I’d Die First, Lisa Springer, Horror, 540.0, 12, 4.3, 120
+Holly Horror: The Longest Night, Michells Jabès Corpora, Ghost, 498.0, 34, 5.0, 189
+House of Ash and Bone, Joel A. Sutherland, ลี้ลับ, 319.0, 9, 4.1, 32
+World War Z: An Oral History of the Zombie War, Max Brooks, zombie, 399.0, 143, 4.0, 320
+Rot & Ruin, Jonathan Maberry, zombie, 289.0, 12, 4.1, 23
+The Woman in Black, Susan Hill, Ghost, 229.0, 15, 3.8, 2
+ 

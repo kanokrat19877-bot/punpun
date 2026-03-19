@@ -4,10 +4,10 @@ package bookstore.model;
 public class Admin extends User {
 	private Inventory inventory;
 	
-	public Admin (String userId, String name, String email, String password, Inventory inventory) {
-		super(userId, name, email, password);
-		this.inventory = inventory;
-	}
+	public Admin(String userId, String name, String email, String password) {
+        super(userId, name, email, password);
+    }
+	
 	public void addBook(Book book) {
 		inventory.addBook(book);
 	}

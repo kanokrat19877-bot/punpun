@@ -1,7 +1,6 @@
 package bookstore.ui;
 
-import bookstore.model.Book;
-import bookstore.model.Order;
+import bookstore.model.*;
 import bookstore.service.BookService;
 import bookstore.service.RepoerService;
 import javafx.geometry.Insets;
@@ -18,8 +17,7 @@ import java.util.function.Consumer;
 
 public class NavBar {
 
-    public HBox createNavBar(Stage stage, BookService bookService,
-Consumer<List<Book>> onSearch) {
+    public HBox createNavBar(Stage stage, BookService bookService, Consumer<List<Book>> onSearch) {
 
         HBox navBar = new HBox(20);
         navBar.setPadding(new Insets(15));
@@ -32,53 +30,47 @@ Consumer<List<Book>> onSearch) {
         TextField searchBar = new TextField();
         searchBar.setPromptText("Search book...");
         searchBar.setPrefWidth(350);
-        
 
         Button searchBtn = new Button("Search");
         searchBar.setOnAction(e -> searchBtn.fire());
 
-        // ===== SEARCH LOGIC =====
         searchBtn.setOnAction(e -> {
-
             String keyword = searchBar.getText();
-
             List<Book> result = bookService.searchByTitle(keyword);
-
             onSearch.accept(result);
         });
 
         Button cartBtn = new Button("Cart");
-
         cartBtn.setOnAction(e -> {
-
-            Chart chart = new Chart();
+            Chart chart = new Chart(); // ตรวจสอบว่าคลาสคุณสะกด Chart หรือ Cart นะครับ
             stage.setScene(chart.createScene(stage));
-
         });
 
-        Button loginBtn = new Button("Account");
-        loginBtn.setStyle("-fx-background-color:#d8cbb2;");
+        Button accountBtn = new Button("Account"); // เปลี่ยนชื่อจาก loginBtn เป็น accountBtn ให้สื่อความหมาย
+        accountBtn.setStyle("-fx-background-color:#d8cbb2;");
         
-        
-        loginBtn.setOnAction(e -> {
-        	List<Order> orders = new ArrayList<>(); // หรือของจริงของคุณ
-        	RepoerService reportService = new RepoerService(orders);
+        // ✅ ปรับปรุงปุ่ม Account ให้แยกหน้าตามประเภท User
+        accountBtn.setOnAction(e -> {
+            User currentUser = UserSession.getUser();
 
-        	AccountPage page = new AccountPage(bookService, reportService);
-            stage.setScene(page.createScene(stage));
-
+            if (currentUser instanceof Admin) {
+                // ถ้าเป็น Admin ไปหน้าจัดการ Dashboard
+                List<Order> orders = new ArrayList<>(); 
+                RepoerService reportService = new RepoerService(orders);
+                AccountPage adminPage = new AccountPage(bookService, reportService);
+                stage.setScene(adminPage.createScene(stage));
+                
+            } else if (currentUser instanceof Customer) {
+                // ✅ ถ้าเป็น Customer ให้ไปหน้าโปรไฟล์เฉพาะของลูกค้า
+                CustomerAccountPage customerPage = new CustomerAccountPage();
+                stage.setScene(customerPage.createSceneAccCustomer(stage));
+            }
         });
         
-        HBox rightMenu = new HBox(10, cartBtn, loginBtn);
+        HBox rightMenu = new HBox(10, cartBtn, accountBtn);
         rightMenu.setAlignment(Pos.CENTER_RIGHT);
 
-        navBar.getChildren().addAll(
-                logo,
-                searchBar,
-                searchBtn,
-                rightMenu
-        );
-
+        navBar.getChildren().addAll(logo, searchBar, searchBtn, rightMenu);
         return navBar;
     }
 }

@@ -41,12 +41,12 @@ import java.util.stream.*;
 public class RepoerService {
 
     private List<Order> orders;
-
-    public RepoerService(List<Order> orders){
-        this.orders = orders;
+    public RepoerService(List<Order> orders) {
+        //ถ้าส่ง null มา ให้กลายเป็น List ว่างแทน จะได้ไม่พัง
+        this.orders = (orders != null) ? orders : new ArrayList<>();
     }
-
-    // 🔥 TOP SELLING BOOKS (เรียงตามจำนวนที่ขาย)
+    
+    //TOP SELLING BOOKS (เรียงตามจำนวนที่ขาย)
     public List<Book> bestSellingBooks(){
         return orders.stream()
                 .flatMap(o -> o.getItems().stream())

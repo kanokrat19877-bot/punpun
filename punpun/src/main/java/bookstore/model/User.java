@@ -29,5 +29,12 @@ public class User {
 	public String getName() {
 		return name;
 	}
+	public String getUserId() { 
+		return userId; 
+	}
+	
+	public String getPassword() { 
+		return password; 
+	}
     
 }
