@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.awt.Desktop;
@@ -29,6 +30,10 @@ public class AccountPage {
     // หากรันใน IDE (IntelliJ/Eclipse) ให้ใช้ path นี้
     private final String STOCK_FILE_PATH = "src/main/java/resources/Stock.txt";
 
+    public AccountPage() {
+    	
+    }
+    
     public AccountPage(BookService bookService, RepoerService reportService){
         this.bookService = bookService;
         this.reportService = reportService;
@@ -48,6 +53,12 @@ public class AccountPage {
     }
 
     public Scene createScene(Stage stage){
+    	Font font = Font.loadFont(
+                getClass().getResourceAsStream("/resources/font/Kanit-Regular.ttf"),
+                20
+            );
+    	System.out.println(font);
+    	
         User user = UserSession.getUser();
         BorderPane root = new BorderPane();
 
@@ -115,7 +126,10 @@ public class AccountPage {
         scroll.setFitToWidth(true);
         scroll.setStyle("-fx-background-color:transparent; -fx-background: #eaeaea;");
         root.setCenter(scroll);
-
+        root.getStylesheets().add(
+                getClass().getResource("/resources/style.css").toExternalForm()
+            );
+        
         return new Scene(root, 1000, 600);
     }
 
@@ -156,7 +170,7 @@ public class AccountPage {
             while ((line = br.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
                 String[] data = line.split(",");
-                if (data.length >= 7) {
+                if (data.length >= 8) {
                     lastId++;
                     String title = data[0].trim();
                     String author = data[1].trim();
@@ -165,8 +179,9 @@ public class AccountPage {
                     int stock = Integer.parseInt(data[4].trim());
                     double rating = Double.parseDouble(data[5].trim());
                     int soldOut = Integer.parseInt(data[6].trim());
+                    String imgPath = data[7].trim();
 
-                    Book newBook = new Book(lastId, title, author, category, price, rating, stock, soldOut);
+                    Book newBook = new Book(lastId, title, author, category, price, rating, stock, soldOut, imgPath);
                     bookService.addBook(newBook);
                     count++;
                 }

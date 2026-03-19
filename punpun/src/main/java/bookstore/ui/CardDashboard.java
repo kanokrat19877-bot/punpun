@@ -16,6 +16,8 @@ import javafx.scene.layout.VBox;
 import java.util.*;
 
 public class CardDashboard extends VBox {
+	
+	public CardDashboard() {}
 
     public CardDashboard(BookService bookService, RepoerService reportService) {
         setSpacing(20);

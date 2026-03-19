@@ -76,7 +76,7 @@ public class Customer extends User {
                     int qty = Integer.parseInt(data[3]);
 
                     // สร้างข้อมูลจำลองเพื่อนำไปแสดงผลในหน้า UI
-                    Book dummyBook = new Book(0, title, "", "", price, 0, 0, 0);
+                    Book dummyBook = new Book(0, title, "", "", price, 0, 0, 0, null);
                     OrderItem item = new OrderItem(dummyBook, qty, price * qty);
                     
                     List<OrderItem> items = new ArrayList<>();

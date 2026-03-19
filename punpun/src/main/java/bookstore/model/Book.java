@@ -9,13 +9,14 @@ public class Book {
 	private double rating = 0;
 	private int stock = 0;
 	private int soldCount = 0;
+	private String imagePath;
 	
 	public Book() {
 		
 	}
 	
 	
-	public Book(int bookId, String title, String author, String category, double price, double rating, int stock, int soldCount) {
+	public Book(int bookId, String title, String author, String category, double price, double rating, int stock, int soldCount, String imgPath) {
 		this.bookId = bookId;
 		this.title = title;
 		this.author = author;
@@ -24,6 +25,7 @@ public class Book {
 		this.rating = rating;
 		this.stock = stock;
 		this.soldCount = soldCount;
+		this.imagePath = imgPath;
 	}
 	public int getBookId() {
 		return bookId;
@@ -59,7 +61,7 @@ public class Book {
 		return title + "by" + author + "$" + price;
  	}
 	public String getImagePath() {
-		return null;
+		return "/resources/" + imagePath;
 	}
 
 }

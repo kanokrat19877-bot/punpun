@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -15,6 +16,13 @@ import java.util.List;
 public class CustomerAccountPage {
 
     public Scene createSceneAccCustomer(Stage stage) {
+    	
+    	Font font = Font.loadFont(
+                getClass().getResourceAsStream("/resources/font/Kanit-Regular.ttf"),
+                20
+            );
+    	System.out.println(font);
+    	
         // 1. ดึง User จาก Session และตรวจสอบว่าเป็น Customer หรือไม่
         User user = UserSession.getUser();
         if (user == null || !(user instanceof Customer)) {
@@ -35,7 +43,9 @@ public class CustomerAccountPage {
         logo.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;");
         
         Button backBtn = new Button("< กลับไปหน้าหลัก");
-        backBtn.setStyle("-fx-background-color:transparent; -fx-text-fill:white; -fx-cursor:hand;");
+        backBtn.setStyle("-fx-background-color:transparent; "
+        		+ "-fx-text-fill:white; "
+        		+ "-fx-cursor:hand;");
         backBtn.setOnAction(e -> stage.setScene(new StorePage().createStoreScene(stage)));
         
         navBar.getChildren().addAll(backBtn, logo);
@@ -117,8 +127,10 @@ public class CustomerAccountPage {
 
         mainBody.getChildren().addAll(leftSide, rightSide);
         root.setCenter(mainBody);
-
-        return new Scene(root, 1100, 700);
+        root.getStylesheets().add(
+                getClass().getResource("/resources/style.css").toExternalForm()
+            );
+        return new Scene(root, 1000, 600);
     }
 
     // ฟังก์ชันสร้างการ์ดโดยอิงจากข้อมูล OrderItem จริงๆ

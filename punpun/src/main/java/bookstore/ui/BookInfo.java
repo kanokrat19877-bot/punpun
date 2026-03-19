@@ -9,7 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class BookInfo {
@@ -17,6 +20,13 @@ public class BookInfo {
     private int quantity = 1;
 
     public Scene createScene(Stage stage, Book book) {
+    	
+    	Font font = Font.loadFont(
+                getClass().getResourceAsStream("/resources/font/Kanit-Regular.ttf"),
+                20
+            );
+    	System.out.println(font);
+    	
 
         BorderPane root = new BorderPane();
 
@@ -32,12 +42,23 @@ public class BookInfo {
         content.setAlignment(Pos.CENTER_LEFT);
 
         // รูปหนังสือ
-        Pane bookImage = new Pane();
-        bookImage.setPrefSize(300, 400);
-        bookImage.setStyle("-fx-background-color:#cccccc;");
+        
+        ImageView bookImageView = new ImageView();
+        try {
+            Image img = new Image(getClass().getResourceAsStream(book.getImagePath()));
+            bookImageView.setImage(img);
+        } catch (Exception e) {
+            System.out.println("หาภาพไม่เจอ: " + book.getImagePath());
+        }
+        bookImageView.setFitWidth(300);
+        bookImageView.setFitHeight(400);
+        bookImageView.setPreserveRatio(true);
+
 
         VBox infoBox = new VBox(15);
-
+        
+        //content.getChildren().addAll(bookImageView, infoBox);
+        
         Label category = new Label(book.getCategory());
         category.setStyle("-fx-text-fill:gray;");
 
@@ -114,7 +135,7 @@ public class BookInfo {
                 buttons
         );
 
-        content.getChildren().addAll(bookImage, infoBox);
+        content.getChildren().addAll(bookImageView, infoBox);
 
         // ===================== BACK BUTTON =====================
 
@@ -132,7 +153,9 @@ public class BookInfo {
         pageContent.getChildren().addAll(backBtn, content);
 
         root.setCenter(pageContent);
-
+        pageContent.getStylesheets().add(
+                getClass().getResource("/resources/style.css").toExternalForm()
+            );
         return new Scene(root, 1000, 600);
     }
 

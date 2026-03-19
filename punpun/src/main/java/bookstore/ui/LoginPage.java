@@ -72,11 +72,10 @@ public class LoginPage {
                 return;
             }
 
-            users.clear(); // ล้างของเก่า
-            loadUsersFromFile(); // โหลดใหม่เพื่อความสดใหม่ของข้อมูล
+            users.clear(); 
+            loadUsersFromFile(); 
 
             for (User user : users) {
-                // ✅ ตรวจสอบ email และ password จากคลาส User
                 if (user != null && user.getEmail() != null && user.login(email, password)) {
                     UserSession.setUser(user);
                     
@@ -89,6 +88,7 @@ public class LoginPage {
                         AccountPage adminPage = new AccountPage(bookService, reportService); 
                         stage.setScene(adminPage.createScene(stage));
                     } else {
+                        // เปลี่ยนไปหน้า Store สำหรับ Customer
                         StorePage storePage = new StorePage();
                         stage.setScene(storePage.createStoreScene(stage));
                     }
@@ -122,7 +122,7 @@ public class LoginPage {
                 }
                 newUser = new Admin("A" + (users.size() + 1), "Admin_" + (users.size() + 1), email, password);
             } else {
-                // ✅ สร้าง Customer พร้อมข้อมูลครบถ้วน
+                // สร้าง Customer พร้อม List ประวัติการซื้อที่ว่างเปล่า
                 newUser = new Customer("C" + (users.size() + 1), "User_" + (users.size() + 1), email, password, new Cart(), new ArrayList<>());
             }
 
@@ -139,7 +139,6 @@ public class LoginPage {
     private void saveUserToFile(User user, String role) {
         File file = new File(USER_FILE_PATH);
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
-            // ✅ มั่นใจว่าได้ค่าจาก getter ของ User
             out.println(role + "," + user.getUserId() + "," + user.getName() + "," + user.getEmail() + "," + user.getPassword());
         } catch (IOException e) { e.printStackTrace(); }
     }
@@ -164,7 +163,7 @@ public class LoginPage {
                 if (role.equalsIgnoreCase("ADMIN")) {
                     users.add(new Admin(id, name, email, pass));
                 } else {
-                    // ✅ โหลดกลับมาเป็น Customer โดยส่งข้อมูลเข้า Constructor
+                    // โหลดกลับมาเป็น Customer โดยส่งค่าให้ครบตาม Constructor
                     users.add(new Customer(id, name, email, pass, new Cart(), new ArrayList<>()));
                 }
             }
@@ -183,9 +182,12 @@ public class LoginPage {
                 String[] data = line.split(",");
                 if (data.length >= 7) {
                     lastId++;
-                    inventory.addBook(new Book(lastId, data[0].trim(), data[1].trim(), data[2].trim(), 
-                                     Double.parseDouble(data[3].trim()), Double.parseDouble(data[5].trim()), 
-                                     Integer.parseInt(data[4].trim()), Integer.parseInt(data[6].trim())));
+                    // ✅ แก้ไข: เพิ่ม parameter ตัวที่ 9 (imagePath) ถ้าไม่มีให้ส่ง "null"
+                    String imgPath = (data.length >= 8) ? data[7].trim() : "null";
+                    inventory.addBook(new Book(
+                             lastId, data[0].trim(), data[1].trim(), data[2].trim(), 
+                             Double.parseDouble(data[3].trim()), Double.parseDouble(data[5].trim()), 
+                             Integer.parseInt(data[4].trim()), Integer.parseInt(data[6].trim()), imgPath));
                 }
             }
         } catch (Exception e) { e.printStackTrace(); }

@@ -22,11 +22,18 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class StorePage {
 
     private void loadBooks(GridPane grid, List<Book> books, Label noBookLabel) {
+    	Font font = Font.loadFont(
+                getClass().getResourceAsStream("/resources/font/Kanit-Regular.ttf"),
+                20
+            );
+    	System.out.println(font);
+    	
         grid.getChildren().clear();
         if (books == null || books.isEmpty()) {
             noBookLabel.setVisible(true);
@@ -62,11 +69,11 @@ public class StorePage {
             while ((line = br.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
                 String[] data = line.split(",");
-                if (data.length >= 7) {
+                if (data.length >= 8) {
                     lastId++;
                     bookList.add(new Book(lastId, data[0].trim(), data[1].trim(), data[2].trim(), 
                                  Double.parseDouble(data[3].trim()), Double.parseDouble(data[5].trim()), 
-                                 Integer.parseInt(data[4].trim()), Integer.parseInt(data[6].trim())));
+                                 Integer.parseInt(data[4].trim()), Integer.parseInt(data[6].trim()), data[7].trim()));
                 }
             }
         } catch (Exception e) {
@@ -81,12 +88,14 @@ public class StorePage {
         bookGrid.setPadding(new Insets(20));
 
         Label noBookLabel = new Label("ไม่พบหนังสือในสต็อก");
-        noBookLabel.setStyle("-fx-font-size:18px; -fx-text-fill: gray;");
+        noBookLabel.setStyle("-fx-font-size:18px; "
+        		+ "-fx-text-fill: gray;");
         noBookLabel.setVisible(false);
 
         ScrollPane scrollPane = new ScrollPane(bookGrid);
         scrollPane.setFitToWidth(true);
-        scrollPane.setStyle("-fx-background-color:transparent; -fx-background: #f4f4f4;");
+        scrollPane.setStyle("-fx-background-color:transparent; "
+        		+ "-fx-background: #f4f4f4;");
 
         StackPane centerPane = new StackPane(scrollPane, noBookLabel);
         
@@ -107,24 +116,28 @@ public class StorePage {
         sidebarContainer.setStyle("-fx-background-color: #f4f4f4;");
 
         Label mainTitle = new Label("ตั้งค่าการค้นหา");
-        mainTitle.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
+        mainTitle.setStyle("-fx-font-size: 22px; "
+        		+ "-fx-font-weight: bold;");
 
         ToggleGroup categoryGroup = new ToggleGroup();
         RadioButton allBtn = new RadioButton("ทั้งหมด");
         allBtn.setToggleGroup(categoryGroup);
         allBtn.setSelected(true);
-        allBtn.setStyle("-fx-font-weight: bold; -fx-padding: 10 0 10 0;");
+        allBtn.setStyle("-fx-font-weight: bold; "
+        		+ "-fx-padding: 10 0 10 0;");
         allBtn.setOnAction(e -> loadBooks(bookGrid, booksFromFile, noBookLabel));
 
         VBox categoryCard = new VBox(10);
         categoryCard.setPadding(new Insets(15));
-        categoryCard.setStyle("-fx-background-color: #343a40; -fx-background-radius: 10;");
+        categoryCard.setStyle("-fx-background-color: #343a40; "
+        		+ "-fx-background-radius: 10;");
 
         Label categoryHeader = new Label("หมวดหมู่สินค้า");
-        categoryHeader.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+        categoryHeader.setStyle("-fx-text-fill: white; "
+        		+ "-fx-font-weight: bold;");
         categoryCard.getChildren().add(categoryHeader);
 
-        String[] cats = {"เหนือธรรมชาติ", "จิตวิทยา", "ระทึกขวัญ", "ผี", "เลือดสาด", "ไซไฟ", "ซอมบี้"};
+        String[] cats = {"สยองขวัญ", "จิตวิทยา", "ระทึกขวัญ", "ผี", "เลือดสาด", "ไซไฟ", "ซอมบี้"};
         for (String c : cats) {
             RadioButton rb = new RadioButton(c);
             rb.setToggleGroup(categoryGroup);
@@ -154,6 +167,9 @@ public class StorePage {
         VBox topBox = new VBox(nav.createNavBar(stage, bookService, b -> loadBooks(bookGrid, booksFromFile, noBookLabel)), sortBox);
         root.setTop(topBox);
         
+        root.getStylesheets().add(
+                getClass().getResource("/resources/style.css").toExternalForm()
+            );
         return new Scene(root, 1000, 600);
     }
 }

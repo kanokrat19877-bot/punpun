@@ -6,13 +6,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class PaymentPage {
 
     public Scene createScene(Stage stage,int totalBook,double totalPrice){
-
+    	
+    	Font font = Font.loadFont(
+                getClass().getResourceAsStream("/resources/font/Kanit-Regular.ttf"),
+                20
+            );
+    	System.out.println(font);
         BorderPane root = new BorderPane();
 
         // ================= NAVBAR =================
@@ -98,7 +104,10 @@ public class PaymentPage {
         page.getChildren().addAll(backBtn,center);
 
         root.setCenter(page);
+        root.getStylesheets().add(
+                getClass().getResource("/resources/style.css").toExternalForm()
+            );
 
-        return new Scene(root,1200,700);
+        return new Scene(root,1000,600);
     }
 }

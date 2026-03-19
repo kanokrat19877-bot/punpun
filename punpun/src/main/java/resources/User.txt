@@ -1,3 +1,4 @@
 ADMIN,A2,Admin_2,admin@store.com,1234
 
 CUSTOMER,C2,User_2,cus101@store.com,1010
+ADMIN,A3,Admin_3,admin1111@store.com,1111
