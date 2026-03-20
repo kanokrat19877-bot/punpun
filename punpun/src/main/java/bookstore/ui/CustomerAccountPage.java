@@ -61,7 +61,7 @@ public class CustomerAccountPage {
         leftSide.setPrefWidth(280);
         leftSide.setAlignment(Pos.TOP_CENTER);
 
-        Label leftTitle = new Label("ข้อมูลส่วนตัว\n& แดชบอร์ด");
+        Label leftTitle = new Label("ข้อมูลส่วนตัว");
         leftTitle.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
         leftTitle.setAlignment(Pos.CENTER);
 
@@ -84,7 +84,12 @@ public class CustomerAccountPage {
         Button logoutBtn = new Button("ออกจากระบบ");
         logoutBtn.setMaxWidth(Double.MAX_VALUE);
         logoutBtn.setPrefHeight(40);
-        logoutBtn.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;");
+        logoutBtn.setStyle("-fx-background-color: #2ecc71; "
+		        		+ "-fx-text-fill: white; "
+		        		+ "-fx-font-weight: bold; "
+		        		+ "-fx-background-radius: 8; "
+		        		+ "-fx-cursor: hand;");
+        
         logoutBtn.setOnAction(e -> {
             UserSession.setUser(null);
             stage.setScene(new LoginPage().createLoginScene(stage));
@@ -92,7 +97,7 @@ public class CustomerAccountPage {
 
         leftSide.getChildren().addAll(leftTitle, profileCard, logoutBtn);
 
-        // === RIGHT SIDE (ประวัติการซื้อ - ดึงจาก OrderHistory) ===
+        // === RIGHT SIDE (form OrderHistory) ===
         VBox rightSide = new VBox(15);
         HBox.setHgrow(rightSide, Priority.ALWAYS);
 
@@ -101,7 +106,7 @@ public class CustomerAccountPage {
 
         VBox historyList = new VBox(15);
         
-        // ดึง List ของ Order มาจาก Customer
+        // List Order > Customer
         List<Order> orders = customer.viewOrderHistory();
 
         if (orders == null || orders.isEmpty()) {
@@ -121,7 +126,9 @@ public class CustomerAccountPage {
         ScrollPane scroll = new ScrollPane(historyList);
         scroll.setFitToWidth(true);
         scroll.setPrefHeight(450);
-        scroll.setStyle("-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;");
+        scroll.setStyle("-fx-background: transparent; "
+        		+ "-fx-background-color: transparent; "
+        		+ "-fx-border-color: transparent;");
 
         rightSide.getChildren().addAll(rightTitle, scroll);
 
@@ -133,7 +140,7 @@ public class CustomerAccountPage {
         return new Scene(root, 1000, 600);
     }
 
-    // ฟังก์ชันสร้างการ์ดโดยอิงจากข้อมูล OrderItem จริงๆ
+    // OrderItem
     private HBox createRealItemCard(OrderItem item) {
         HBox card = new HBox(15);
         card.setPadding(new Insets(15));
@@ -145,11 +152,13 @@ public class CustomerAccountPage {
         // สมมติเป็นสีแทนรูปภาพ
         Pane img = new Pane();
         img.setPrefSize(80, 100);
-        img.setStyle("-fx-background-color: #dfe6e9; -fx-background-radius: 5;");
+        img.setStyle("-fx-background-color: #dfe6e9; "
+        		+ "-fx-background-radius: 5;");
         
         VBox info = new VBox(8);
         Label lbTitle = new Label(item.getbook().getTitle()); // ดึงชื่อหนังสือ
-        lbTitle.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+        lbTitle.setStyle("-fx-font-weight: bold; "
+        				+ "-fx-font-size: 16px;");
         lbTitle.setWrapText(true);
 
         Label lbPrice = new Label("ราคา: " + String.format("%.2f", item.getSubtotal()) + " บาท");

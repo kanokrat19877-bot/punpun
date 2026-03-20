@@ -46,7 +46,7 @@ public class RepoerService {
         this.orders = (orders != null) ? orders : new ArrayList<>();
     }
     
-    //TOP SELLING BOOKS (เรียงตามจำนวนที่ขาย)
+    //TOP SELLING BOOKS
     public List<Book> bestSellingBooks(){
         return orders.stream()
                 .flatMap(o -> o.getItems().stream())
@@ -61,7 +61,7 @@ public class RepoerService {
                 .collect(Collectors.toList());
     }
 
-    // 🔥 SALES BY CATEGORY (ใช้ทำกราฟ)
+    //SALES BY CATEGORY (ใช้ทำกราฟ)
     public Map<String, Long> salesByCategory() {
         return orders.stream()
                 .flatMap(order -> order.getItems().stream())
@@ -71,7 +71,7 @@ public class RepoerService {
                 ));
     }
 
-    // 🔥 TOTAL SALES (บาท)
+    //TOTAL SALES
     public double getTotalSales(){
         return orders.stream()
                 .flatMap(o -> o.getItems().stream())
@@ -81,7 +81,7 @@ public class RepoerService {
                 .sum();
     }
 
-    // 🔥 TOP 3 พร้อมจำนวนที่ขาย
+    //TOP 3
     public List<Map.Entry<Book, Integer>> getTop3Books(){
 
         Map<Book, Integer> map = orders.stream()

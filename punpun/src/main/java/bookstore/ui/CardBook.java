@@ -27,7 +27,7 @@ public class CardBook extends VBox {
                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 6,0,0,2);
                 """);
 
-        // 🖼️ ส่วนแสดงรูปภาพ
+        // ส่วนแสดงรูปภาพ
         ImageView coverBook = new ImageView();
         coverBook.setFitWidth(140);
         coverBook.setFitHeight(180);

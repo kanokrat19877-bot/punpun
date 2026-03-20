@@ -70,7 +70,9 @@ public class CardBookChart extends StackPane {
         // ปุ่มบวกลบ (เล็กหน่อยแต่กดง่าย)
         Button minus = new Button("-");
         Button plus = new Button("+");
-        String btnStyle = "-fx-background-color: #f0f0f0; -fx-background-radius: 4; -fx-cursor: hand;";
+        String btnStyle = "-fx-background-color: #f0f0f0; "
+        		+ "-fx-background-radius: 4; "
+        		+ "-fx-cursor: hand;";
         minus.setStyle(btnStyle);
         plus.setStyle(btnStyle);
         minus.setPrefSize(28, 28);

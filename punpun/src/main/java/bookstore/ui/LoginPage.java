@@ -19,6 +19,8 @@ public class LoginPage {
     private List<User> users = new ArrayList<>();
     private final String USER_FILE_PATH = "src/main/java/resources/User.txt";
     private final String STOCK_FILE_PATH = "src/main/java/resources/Stock.txt";
+    
+    //ADMIN CODE
     private final String ADMIN_CODE = "ADMIN123"; 
 
     public LoginPage() {
